@@ -65,7 +65,7 @@ div[data-testid="element-container"] > label[data-testid="stMetricLabel"] > div 
 """
 , unsafe_allow_html=True)
 
-dt=pd.read_csv("C:\\Users\\AlfredRomarioG\\OneDrive - Cittabase Solutions Private Limited\\Desktop\\Project\\healthcare_dataset.csv")
+dt=pd.read_csv('healthcare_dataset.csv')
 
 #Rename columns
 new_names = {'NAME': 'name', 'AGE': 'age', 'GENDER': 'gender',
