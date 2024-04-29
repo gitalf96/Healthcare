@@ -80,8 +80,8 @@ new_names = {'NAME': 'name', 'AGE': 'age', 'GENDER': 'gender',
              'TEST_RESULTS': 'test_results', 'BMI': 'BMI'}
 df.rename(columns=new_names, inplace=True)
 
-# df['date_of_admission'] = pd.to_datetime(df['date_of_admission'])
-# df['admit_year'] = df['date_of_admission'].dt.year
+df['date_of_admission'] = pd.to_datetime(df['date_of_admission'])
+df['admit_year'] = df['date_of_admission'].dt.year
 
 #Categorize Age
 category_AGE=[]
@@ -130,7 +130,7 @@ if selected=="Dashboard":
 
         with placeholder.container():
 
-            d1,d3=st.columns(2) 
+            d1,d2,d3=st.columns(3) 
             if selected=="Diabetes":
                 d1.metric(label="No.of Patients:",
                 value=int(df['medical_condition'].value_counts()['Diabetes']))
@@ -169,24 +169,24 @@ if selected=="Dashboard":
                d3.metric(label="Most Diagonised gender",
                value=df.query("medical_condition==['Cancer']")["gender"].value_counts().idxmax())
 
-            # if selected=="Diabetes":    
-            #     d2.metric(label="Most Cases in the year",
-            #     value=df.query("medical_condition==['Diabetes']")["admit_year"].mode())
-            # if selected=="Asthma":
-            #     d2.metric(label="Most Cases in the year",
-            #     value=df.query("medical_condition==['Asthma']")["admit_year"].mode())
-            # if selected=="Obesity":
-            #     d2.metric(label="Most Cases in the year",
-            #     value=df.query("medical_condition==['Obesity']")["admit_year"].mode())
-            # if selected=="Arthritis":
-            #     d2.metric(label="Most Cases in the year",
-            #     value=df.query("medical_condition==['Arthritis']")["admit_year"].mode())
-            # if selected=="Hypertension":
-            #     d2.metric(label="Most Cases in the year",
-            #     value=df.query("medical_condition==['Hypertension']")["admit_year"].mode())
-            # if selected=="Cancer":
-            #     d2.metric(label="Most Cases in the year",
-            #     value=df.query("medical_condition==['Cancer']")["admit_year"].mode())
+            if selected=="Diabetes":    
+                d2.metric(label="Most Cases in the year",
+                value=df.query("medical_condition==['Diabetes']")["admit_year"].mode())
+            if selected=="Asthma":
+                d2.metric(label="Most Cases in the year",
+                value=df.query("medical_condition==['Asthma']")["admit_year"].mode())
+            if selected=="Obesity":
+                d2.metric(label="Most Cases in the year",
+                value=df.query("medical_condition==['Obesity']")["admit_year"].mode())
+            if selected=="Arthritis":
+                d2.metric(label="Most Cases in the year",
+                value=df.query("medical_condition==['Arthritis']")["admit_year"].mode())
+            if selected=="Hypertension":
+                d2.metric(label="Most Cases in the year",
+                value=df.query("medical_condition==['Hypertension']")["admit_year"].mode())
+            if selected=="Cancer":
+                d2.metric(label="Most Cases in the year",
+                value=df.query("medical_condition==['Cancer']")["admit_year"].mode())
             
             with st.expander('Outcome of the Test Results based on Medications'):
             
@@ -311,7 +311,7 @@ if selected=="Prediction":
             default_index=0,
         )
     dt=df.drop(['doctor','hospital','insurance','room','admission_type','bill','name','date_of_admission',
-                'discharge_date','Age_Category','patients'],axis=1)       
+                'discharge_date','Age_Category','patients','admit_year'],axis=1)       
 
     if selected=="Single":
 
