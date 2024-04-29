@@ -405,11 +405,11 @@ if selected=="Prediction":
             if st.button('Predict Patient condition'):
                 for i in prediction:
                     if i==0:
-                            st.write('The Patient condition is Abnormal')
+                            st.subheader('**The Patient condition is Abnormal**')
                     elif i==1:
-                            st.write('The Patient condition is Inconclusive') 
+                            st.subheader('**The Patient condition is Inconclusive**') 
                     else:
-                            st.write('The Patient condition is Normal') 
+                            st.subheader('**The Patient condition is Normal**') 
 
 
     if selected=="Batch":
