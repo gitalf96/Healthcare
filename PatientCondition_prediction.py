@@ -35,7 +35,8 @@ st.title(':red[Patient Condition Analysis and Prediction]')
 page_element="""
 <style>
 div[data-testid="stApp"]{
-  background-image: url("https://cdn.wallpapersafari.com/88/75/cLUQqJ.jpg");
+  # background-image: url("https://cdn.wallpapersafari.com/88/75/cLUQqJ.jpg");
+  background-image: url("https://img.freepik.com/premium-vector/healthcare-medical-background-with-flat-icons-symbols_120542-264.jpg?w=996");
   background-size: cover;
 }
 [data-testid="stHeader"]{
