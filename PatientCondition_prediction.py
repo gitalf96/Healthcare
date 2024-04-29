@@ -35,7 +35,7 @@ st.title(':red[Patient Condition Analysis and Prediction]')
 page_element="""
 <style>
 [data-testid="stAppViewContainer"]{
-  background-image: url("https://previews.123rf.com/images/9dreamstudio/9dreamstudio1909/9dreamstudio190902885/130299066-medical-background-with-face-mask-stethoscope-vaccine-on-white-background-top-view-copy-space.jpg");
+  background-image: url("https://cdn.wallpapersafari.com/88/75/cLUQqJ.jpg");
   background-size: cover;
 }
 [data-testid="stHeader"]{
