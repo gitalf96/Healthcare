@@ -39,7 +39,7 @@ page_element="""
   background-size: cover;
 }
 [data-testid="stHeader"]{
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0,0,0,0.9);
 }
 </style>
 """
