@@ -380,9 +380,9 @@ if selected=="Prediction":
         if selected=="LightGBM":
 
             b1,b2=st.columns(2) 
-            b1.metric(label="Accuracy:",
+            b1.metric(label=':green[Accuracy: ]',
                     value=Acc)
-            b2.metric(label='F1 score: ', value=ef1)
+            b2.metric(label=':green[F1 score: ]', value=ef1)
         
 
             prediction = model.predict(new_df)
@@ -397,9 +397,9 @@ if selected=="Prediction":
 
         if selected=="Random Forest":
             a1,a2=st.columns(2) 
-            a1.metric(label="Accuracy:",
+            a1.metric(label=':green[Accuracy: ]',
                     value=acc)
-            a2.metric(label='F1 score: ', value=f1)
+            a2.metric(label=':green[F1 score: ]', value=f1)
 
             prediction = clf.predict(new_df)
             if st.button('Predict Patient condition'):
