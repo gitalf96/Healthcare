@@ -226,6 +226,13 @@ if selected=="Dashboard":
 
             st.plotly_chart(fig, use_container_width=True) 
 
+            figg = px.sunburst(df, path = ["test_results", "medical_condition"])
+            figg.update_traces(textinfo = "label + percent parent")
+            figg.update_layout(title_text = "Patient by Medical Condition",
+                            titlefont = {'size' : 20, 'family' : 'Serif'},
+                            width = 600, height = 600)
+            st.plotly_chart(figg, use_container_width=True)
+
 # dt.head()  
 
 gen=[]
