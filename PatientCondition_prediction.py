@@ -343,12 +343,13 @@ if selected=="Prediction":
     # Collect user input for new data
         new_data={}
     
-        new_data['age']=st.number_input("Enter age")
-        new_data['gender'] = st.selectbox("Select gender",('Female','Male'))
-        new_data['BlOOD_TYPE']= st.selectbox("Select BlOOD_TYPE",('O-','O+','B-','AB+','A+','AB-','A-','B+'))
-        new_data['medical_condition']=st.selectbox("Select medical_condition",('Diabetes','Asthma','Obesity','Arthritis','Hypertension','Cancer'))
-        new_data['medication']=st.selectbox("Select medication",('Aspirin','Lipitor','Penicillin','Paracetamol','Ibuprofen'))
-        new_data['BMI']=st.selectbox("Select BMI",('High','Medium','Low'))
+        
+        new_data['age']=st.number_input(':red[Enter age]')
+        new_data['gender'] = st.selectbox(':red[Select gender]',('Female','Male'))
+        new_data['BlOOD_TYPE']= st.selectbox(':red[Select BlOOD_TYPE]',('O-','O+','B-','AB+','A+','AB-','A-','B+'))
+        new_data['medical_condition']=st.selectbox(':red[Select medical_condition]',('Diabetes','Asthma','Obesity','Arthritis','Hypertension','Cancer'))
+        new_data['medication']=st.selectbox(':red[Select medication]',('Aspirin','Lipitor','Penicillin','Paracetamol','Ibuprofen'))
+        new_data['BMI']=st.selectbox(':red[Select BMI]',('High','Medium','Low'))
         
         new_data=pd.DataFrame([new_data])
         # # plot feature importance
