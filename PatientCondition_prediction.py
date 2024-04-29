@@ -34,7 +34,7 @@ st.title(':red[Patient Condition Analysis and Prediction]')
 
 page_element="""
 <style>
-[data-testid="stApp"]{
+div[data-testid="stApp"]{
   background-image: url("https://cdn.wallpapersafari.com/88/75/cLUQqJ.jpg");
   background-size: cover;
 }
