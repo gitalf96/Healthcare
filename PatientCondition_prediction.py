@@ -13,6 +13,8 @@ from sklearn.metrics import f1_score
 import lightgbm as lgb
 # from sklearn.model_selection import GridSearchCV
 from matplotlib import pyplot
+import warnings
+warnings.filterwarnings("ignore")
 
 
 
