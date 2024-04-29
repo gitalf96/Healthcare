@@ -43,6 +43,7 @@ div[data-testid="stApp"]{
 }
 </style>
 """
+st.markdown(page_element, unsafe_allow_html=True)
 
 st.markdown(
     """
