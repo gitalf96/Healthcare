@@ -51,7 +51,7 @@ st.markdown(
     <style>
     section[data-testid="stSidebar"] 
     div[class="st-emotion-cache-u5opgr eczjsme11"]{
-    background-image: linear-gradient(#8993ab,#8993ab); 
+    background-image: url("https://cdn.wallpapersafari.com/88/75/cLUQqJ.jpg"); 
     color: white
     }
     </style>
