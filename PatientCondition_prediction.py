@@ -21,16 +21,28 @@ from matplotlib import pyplot
 st.set_page_config(page_title="Healthcare Dashboard",layout='wide')
 st.title(':red[Patient Condition Analysis and Prediction]')
 
-st.markdown(
-    """
-    <style>
-    div[data-testid="stApp"]  {
-        background-color: rgba(0,0,0, 0.9);
-            }
-   </style>
-    """,
-    unsafe_allow_html=True
-)
+# st.markdown(
+#     """
+#     <style>
+#     div[data-testid="stApp"]  {
+#         background-color: rgba(0,0,0, 0.9);
+#             }
+#    </style>
+#     """,
+#     unsafe_allow_html=True
+# )
+
+page_element="""
+<style>
+[data-testid="stAppViewContainer"]{
+  background-image: url("https://previews.123rf.com/images/9dreamstudio/9dreamstudio1909/9dreamstudio190902885/130299066-medical-background-with-face-mask-stethoscope-vaccine-on-white-background-top-view-copy-space.jpg");
+  background-size: cover;
+}
+[data-testid="stHeader"]{
+  background-color: rgba(0,0,0,0);
+}
+</style>
+"""
 
 st.markdown(
     """
