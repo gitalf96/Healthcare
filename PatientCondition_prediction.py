@@ -46,19 +46,18 @@ div[data-testid="stApp"]{
 """
 st.markdown(page_element, unsafe_allow_html=True)
 
-st.markdown(
-    """
-    <style>
-    section[data-testid="stSidebar"] 
-    div[class="st-emotion-cache-u5opgr eczjsme11"]{
+page_element="""
+<style>
+    div[data-testid="stSidebar"]{
+    # div[class="st-emotion-cache-u5opgr eczjsme11"]{
     background-image: url("https://cdn.wallpapersafari.com/88/75/cLUQqJ.jpg"); 
     color: white
     }
     </style>
     
-    """,
-    unsafe_allow_html=True
-)
+    """
+st.markdown(page_element, unsafe_allow_html=True)
+
 
 st.markdown("""
 <style>
