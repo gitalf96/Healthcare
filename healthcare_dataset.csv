@@ -1,4 +1,4 @@
-Name,Age,Gender,Blood Type,Medical Condition,Date of Admission,Doctor,Hospital,Insurance Provider,Billing Amount,Room Number,Admission Type,Discharge Date,Medication,Test Results,BMI
+NAME,AGE,GENDER,BlOOD_TYPE,MEDICAL_CONDITION,DATE_ADMISSION,DOCTOR,HOSPITAL,INSURANCE_PROVIDER,BILLING_AMOUNT,ROOM_NUMBER,ADMISSION_TYPE,DISCHARGE_DATE,MEDICATION,TEST_RESULTS,BMI
 Tiffany Ramirez,81,Female,O-,Diabetes,17-11-2022,Patrick Parker,Wallace-Hamilton,Medicare,37490.98336,146,Elective,01-12-2022,Aspirin,Inconclusive,High
 Ruben Burns,35,Male,O+,Asthma,01-06-2023,Diane Jackson,"Burke, Griffin and Cooper",UnitedHealthcare,47304.06485,404,Emergency,15-06-2023,Lipitor,Normal,Medium
 Chad Byrd,61,Male,B-,Obesity,09-01-2019,Paul Baker,Walton LLC,Medicare,36874.897,292,Emergency,08-02-2019,Lipitor,Normal,High
