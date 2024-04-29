@@ -355,8 +355,8 @@ if selected=="Prediction":
         # pyplot.bar([x for x in range(len(importance))], importance)
         # pyplot.show()
 
-        feat_importances = pd.Series(clf.feature_importances_, index=dt.columns)
-        feat_importances.nlargest(4).plot(kind='barh')
+        # feat_importances = pd.Series(clf.feature_importances_, index=dt.columns)
+        # feat_importances.nlargest(4).plot(kind='barh')
 
         # fig = px.histogram(medicationresult.sort_values('test_results') ,x='test_results', 
         #                        y='patients', color = 'test_results',labels={
