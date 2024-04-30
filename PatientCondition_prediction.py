@@ -11,7 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 import lightgbm as lgb
-from lgb import plot_impotrtance
+from lightgbm import plot_impotrtance
 # from sklearn.model_selection import GridSearchCV
 from matplotlib import pyplot
 # import warnings
