@@ -376,19 +376,16 @@ if selected=="Prediction":
         new_data['BMI']=st.selectbox(':red[Select BMI]',('High','Medium','Low'))
         
         new_data=pd.DataFrame([new_data])
-        # # plot feature importance
-        # pyplot.bar([x for x in range(len(importance))], importance)
-        # pyplot.show()
+        def return_modell():
+            data =df
+            # create model instance
+            # fit model
+            modell = lgb.LGBMClassifier()
+            modell.fit(x_train, y_train)
+            # make predictions
+            preds = modell.predict(x_test)
+            return modell
 
-        # feat_importances = pd.Series(clf.feature_importances_, index=dt.columns)
-        # feat_importances.nlargest(4).plot(kind='barh')
-
-        # fig = px.histogram(medicationresult.sort_values('test_results') ,x='test_results', 
-        #                        y='patients', color = 'test_results',labels={
-        #                         # notice here the use of _("") localization function
-        #                         "test_results": ("Patient Condition")
-        #                         #  "patients": ("Patient Count")
-        #                             },)
 
         new_df=new_data.apply(LabelEncoder().fit_transform)
         # st.write(impp)
@@ -403,21 +400,29 @@ if selected=="Prediction":
         
         if selected=="LightGBM":
 
-            b1,b2=st.columns(2) 
-            b1.metric(label=':green[Accuracy: ]',
-                    value=Acc)
-            b2.metric(label=':green[F1 score: ]', value=ef1)
-        
-
             prediction = model.predict(new_df)
             if st.button('Predict Patient condition'):
                 for i in prediction:
                     if i==0:
-                            st.subheader('**The Patient condition is Abnormal**')
+                            st.write('The Patient condition is Abnormal')
                     elif i==1:
-                            st.subheader('**The Patient condition is Inconclusive**') 
+                            st.write('The Patient condition is Inconclusive') 
                     else:
-                            st.subheader('**The Patient condition is Normal**') 
+                            st.write('The Patient condition is Normal') 
+
+            cc1,cc2=st.tabs(["Acuracy and F1 scores","Feature Importance Chart"])
+            with cc1:
+                b1,b2=st.columns(2) 
+                b1.metric(label='**:red[Accuracy]**',
+                        value=Acc)
+                b2.metric(label='F1 score: ', value=ef1)
+
+            with cc2:
+                st.subheader('Feature Importance chart')
+                modell = return_modell()
+        # plot feature importance
+                st.plotly_chart(plot_importance(modell).figure,use_container_width=True) # Pass the underlying figure
+            # lgb.plot_importance(model)
 
         if selected=="Random Forest":
             a1,a2=st.columns(2) 
