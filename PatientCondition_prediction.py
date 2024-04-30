@@ -422,7 +422,8 @@ if selected=="Prediction":
                 st.subheader('Feature Importance chart')
                 modell = return_modell()
         # plot feature importance
-                st.pyplot(plot_importance(modell).figure) # Pass the underlying figure
+                # st.pyplot(plot_importance(modell).figure) # Pass the underlying figure
+                st.plotly_chart(plot_importance(modell).figure,use_container_width=True) 
             # lgb.plot_importance(model)
 
         if selected=="Random Forest":
