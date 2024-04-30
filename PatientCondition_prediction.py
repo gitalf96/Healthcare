@@ -201,38 +201,42 @@ if selected=="Dashboard":
                 d2.metric(label="Most Cases in the year",
                 value=df.query("medical_condition==['Cancer']")["admit_year"].mode())
             
-            with st.expander('Outcome of the Test Results based on Medications'):
+            with st.expander('Insights based on Admission Type'):
             
-                selected_medication = st.radio('Select Medical Condition:', df.medication.unique(), index = 0)
+                selected_admtype = st.radio('Select Admission Type:', df.admission_type.unique(), index = 0)
 
-                medicationresult = df[df['medication'] == selected_medication]
+                admissiontype = df[df['admission_type'] == selected_admtype]
 
-            fig = px.histogram(medicationresult.sort_values('test_results') ,x='test_results', 
-                               y='patients', color = 'test_results',labels={
-                                # notice here the use of _("") localization function
-                                "test_results": ("Patient Condition")
-                                #  "patients": ("Patient Count")
-                                    },)
-            
-            if selected_medication == 'Aspirin':
-                st.write('Test results of patients treated with Aspirin!')
-            elif selected_medication == 'Paracetamol':
-                st.write('Test results of patients treated with Paracetamol!')
-            elif selected_medication=='Ibuprofen':
-                st.write('Test results of patients treated with Ibuprofen!')
-            elif selected_medication=='Lipitor':
-                st.write('Test results of patients treated with Lipitor!')
-            elif selected_medication=='Penicillin':
-                st.write('Test results of patients treated with Penicillin!')
+            see1,see2=st.tabs(["Patient Condition based on Admission Type","Preferred medication for patients"])
 
-            st.plotly_chart(fig, use_container_width=True) 
+            fig = px.histogram(admissiontype.sort_values('test_results') ,x='test_results', 
+                                y='patients', color = 'test_results',labels={
+                                    # notice here the use of _("") localization function
+                                    "test_results": ("Patient Condition")
+                                    #  "patients": ("Patient Count")
+                                        },)
+            with see1:
 
-            figg = px.sunburst(df, path = ["test_results", "medical_condition"])
-            figg.update_traces(textinfo = "label + percent parent")
-            figg.update_layout(title_text = "Patient by Medical Condition",
-                            titlefont = {'size' : 20, 'family' : 'Serif'},
-                            width = 600, height = 600)
-            st.plotly_chart(figg, use_container_width=True)
+                    if selected_admtype == 'Elective':
+                        st.write('Condition of patients in Elective admission')
+                    elif selected_admtype == 'Emergency':
+                        st.write('Condition of patients in Emergency admission')
+                    elif selected_admtype=='Urgent':
+                        st.write('Condition of patients in Urgent admission')
+                
+                    st.plotly_chart(fig, use_container_width=True) 
+
+            tig = px.pie(admissiontype.sort_values('admission_type'), values='patients', names='medication',labels={"medication": ("Medication given")},)
+                
+            with see2:
+                    if selected_admtype == 'Elective':
+                        st.write('Condition of patients in Elective admission')
+                    elif selected_admtype == 'Emergency':
+                        st.write('Condition of patients in Emergency admission')
+                    elif selected_admtype=='Urgent':
+                        st.write('Condition of patients in Urgent admission')
+
+                    st.plotly_chart(tig, use_container_width=True)
 
 # dt.head()  
 
