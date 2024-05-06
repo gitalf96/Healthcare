@@ -37,7 +37,7 @@ page_element="""
 <style>
 div[data-testid="stApp"]{
   # background-image: url("https://cdn.wallpapersafari.com/88/75/cLUQqJ.jpg");
-  background-image: url("https://www.pptgrounds.com/wp-content/uploads/2019/11/Annual-Report-PPT-Backgrounds-1536x864.jpg");
+  background-image: url("https://slidescorner.com/wp-content/uploads/2023/03/04-6-1024x576.jpg.webp");
   background-size: cover;
 }
 [data-testid="stHeader"]{
