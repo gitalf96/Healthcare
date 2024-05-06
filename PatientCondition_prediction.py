@@ -69,7 +69,7 @@ div[data-testid="column"] {
    padding: 3% 2% 3% 3%;
    border-radius:1px;
    color: rgb((255,0,0));
-   # overflow-wrap: break-word;
+   overflow-wrap: break-word;
 }
 
 /* breakline for metric text         */
