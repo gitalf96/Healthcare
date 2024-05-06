@@ -37,7 +37,7 @@ page_element="""
 <style>
 div[data-testid="stApp"]{
   # background-image: url("https://cdn.wallpapersafari.com/88/75/cLUQqJ.jpg");
-  background-image: url("https://img.freepik.com/premium-vector/healthcare-medical-background-with-flat-icons-symbols_120542-264.jpg?w=996");
+  background-image: url("https://www.pptgrounds.com/wp-content/uploads/2019/11/Annual-Report-PPT-Backgrounds-1536x864.jpg");
   background-size: cover;
 }
 [data-testid="stHeader"]{
