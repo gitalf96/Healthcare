@@ -360,8 +360,8 @@ if selected=="Prediction":
         f1=('{:.4f}'.format(F1))
 
         #lightgbm
-        model = lgb.LGBMClassifier(learning_rate=0.09,max_depth=-5,random_state=42)
-        model.fit(x_train,y_train,eval_set=[(x_test,y_test),(x_train,y_train)],eval_metric='logloss')
+        model = lgb.LGBMClassifier()
+        model.fit(x_train,y_train)
         Y_pred=model.predict(x_test)
         Accu=accuracy_score(Y_pred,y_test)
         Acc=('{:.4f}'.format(Accu))
