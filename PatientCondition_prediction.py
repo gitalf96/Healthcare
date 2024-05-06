@@ -64,7 +64,8 @@ st.markdown("""
 <style>
 div[data-testid="column"] {
    background-color: rgba(204, 204, 255, 0.9);
-   border: 3px solid rgba(64,224,208,0.9);
+   # background-color: rgba(0,0,0, 0.9);
+   border: 3px solid rgba(0,0,0, 0.9);
    padding: 3% 2% 3% 3%;
    border-radius:4px;
    color: rgb((255,0,0));
@@ -208,38 +209,43 @@ if selected=="Dashboard":
 
                 admissiontype = df[df['admission_type'] == selected_admtype]
 
-            see1,see2=st.tabs(["Patient Condition based on Admission Type","Preferred medication for patients"])
+            r1,r2,r3,r4,r5=st.columns([5,42.5,5,42.5,5])
 
-            fig = px.histogram(admissiontype.sort_values('test_results') ,x='test_results', 
-                                y='patients', color = 'test_results',labels={
-                                    # notice here the use of _("") localization function
-                                    "test_results": ("Patient Condition")
-                                    #  "patients": ("Patient Count")
-                                        },)
-            with see1:
+            with r2:
 
-                    if selected_admtype == 'Elective':
-                        st.write('Condition of patients in Elective admission')
-                    elif selected_admtype == 'Emergency':
-                        st.write('Condition of patients in Emergency admission')
-                    elif selected_admtype=='Urgent':
-                        st.write('Condition of patients in Urgent admission')
+                fig = px.histogram(admissiontype.sort_values('test_results') ,x='test_results', 
+                                    y='patients', color = 'test_results',labels={
+                                        # notice here the use of _("") localization function
+                                        "test_results": ("Patient Condition")
+                                        #  "patients": ("Patient Count")
+                                            },)
+                fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)',paper_bgcolor='rgba(0, 0, 0, 0)')
+            # with see1:
+
+                if selected_admtype == 'Elective':
+                    st.write('Condition of patients in Elective admission')
+                elif selected_admtype == 'Emergency':
+                    st.write('Condition of patients in Emergency admission')
+                elif selected_admtype=='Urgent':
+                    st.write('Condition of patients in Urgent admission')
                 
-                    st.plotly_chart(fig, use_container_width=True) 
 
-            tig = px.pie(admissiontype.sort_values('admission_type'), values='patients', names='medication',labels={"medication": ("Medication given")},)
-                
-            with see2:
-                    if selected_admtype == 'Elective':
-                        st.write('Condition of patients in Elective admission')
-                    elif selected_admtype == 'Emergency':
-                        st.write('Condition of patients in Emergency admission')
-                    elif selected_admtype=='Urgent':
-                        st.write('Condition of patients in Urgent admission')
+                st.plotly_chart(fig, use_container_width=True) 
 
-                    st.plotly_chart(tig, use_container_width=True)
+            with r4:
 
-# dt.head()  
+                tig = px.pie(admissiontype.sort_values('admission_type'), values='patients', names='medication',labels={"medication": ("Medication given")},)
+                tig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)',paper_bgcolor='rgba(0, 0, 0, 0)')
+                                   
+                if selected_admtype == 'Elective':
+                    st.write('Medication give in Elective admission')
+                elif selected_admtype == 'Emergency':
+                    st.write('Medication given in Emergency admission')
+                elif selected_admtype=='Urgent':
+                    st.write('Medication given in Urgent admission')
+                    
+                st.plotly_chart(tig, use_container_width=True)
+
 
 gen=[]
 for i in df['gender']:
@@ -344,11 +350,8 @@ if selected=="Prediction":
         x=x.drop(columns=['test_results'],axis=1)
         y=dt['test_results']
         x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.22,random_state=42)
-        clf = RandomForestClassifier()
+        clf = RandomForestClassifier(n_estimators=100,random_state=1)
         clf.fit(x_train, y_train)
-        importance = clf.feature_importances_
-        for i,v in enumerate(importance):
-            print('Feature: %0d, Score: %.5f' % (i,v))
         y_pred = clf.predict(x_test)
         accuracy = accuracy_score(y_test, y_pred)
         acc=('{:.4f}'.format(accuracy))
@@ -357,8 +360,8 @@ if selected=="Prediction":
         f1=('{:.4f}'.format(F1))
 
         #lightgbm
-        model = lgb.LGBMClassifier()
-        model.fit(x_train,y_train)
+        model = lgb.LGBMClassifier(learning_rate=0.09,max_depth=-5,random_state=42)
+        model.fit(x_train,y_train,eval_set=[(x_test,y_test),(x_train,y_train)],eval_metric='logloss')
         Y_pred=model.predict(x_test)
         Accu=accuracy_score(Y_pred,y_test)
         Acc=('{:.4f}'.format(Accu))
@@ -368,7 +371,6 @@ if selected=="Prediction":
     # Collect user input for new data
         new_data={}
     
-        
         new_data['age']=st.number_input(':red[Enter age]')
         new_data['gender'] = st.selectbox(':red[Select gender]',('Female','Male'))
         new_data['BlOOD_TYPE']= st.selectbox(':red[Select BlOOD_TYPE]',('O-','O+','B-','AB+','A+','AB-','A-','B+'))
@@ -377,16 +379,7 @@ if selected=="Prediction":
         new_data['BMI']=st.selectbox(':red[Select BMI]',('High','Medium','Low'))
         
         new_data=pd.DataFrame([new_data])
-        def return_modell():
-            data =df
-            # create model instance
-            # fit model
-            modell = lgb.LGBMClassifier()
-            modell.fit(x_train, y_train)
-            # make predictions
-            preds = modell.predict(x_test)
-            return modell
-
+        
 
         new_df=new_data.apply(LabelEncoder().fit_transform)
         # st.write(impp)
@@ -416,31 +409,78 @@ if selected=="Prediction":
                 b1,b2=st.columns(2) 
                 b1.metric(label='**:red[Accuracy]**',
                         value=Acc)
-                b2.metric(label='F1 score: ', value=ef1)
+                b2.metric(label='**:red[F1 score:]**', value=ef1)
 
             with cc2:
                 st.subheader('Feature Importance chart')
-                modell = return_modell()
-        # plot feature importance
-                # st.pyplot(plot_importance(modell).figure) # Pass the underlying figure
-                st.plotly_chart(plot_importance(modell).figure,use_container_width=True) 
-            # lgb.plot_importance(model)
 
+                Feature_Import = model.feature_importances_
+                FI = list(zip(Feature_Import,x_test.columns))
+                dtf = pd.DataFrame(FI, columns=['Score', 'Columns'])
+                dtf.sort_values(by='Score', inplace=True, ascending=False)
+        
+                st.write('')
+                fiig = px.bar(dtf, x='Score', y='Columns', color='Columns',
+                        labels={'Score': 'Scores', 'Columns': 'Features'},
+                        text='Score')
+        
+                # Set transparent background
+                fiig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0, 0, 0, 0)')
+                # Customize tick and label colors for x-axis and y-axis
+                fiig.update_xaxes(tickfont=dict(color='#5CA8F1'),  # Change x-axis tick color to blue
+                            titlefont=dict(color='#EF7B45'))  # Change x-axis label color to blue
+                fiig.update_yaxes(tickfont=dict(color='#5CA8F1'),  # Change y-axis tick color to green
+                                titlefont=dict(color='#EF7B45'))  # Change y-axis label color to blue
+                # Render the chart using Streamlit
+                st.plotly_chart(fiig, use_container_width=True)
+
+
+
+            
         if selected=="Random Forest":
-            a1,a2=st.columns(2) 
-            a1.metric(label=':green[Accuracy: ]',
-                    value=acc)
-            a2.metric(label=':green[F1 score: ]', value=f1)
 
             prediction = clf.predict(new_df)
             if st.button('Predict Patient condition'):
                 for i in prediction:
                     if i==0:
-                            st.subheader('**The Patient condition is Abnormal**')
+                            st.markdown('**The Patient condition is Abnormal**')
                     elif i==1:
-                            st.subheader('**The Patient condition is Inconclusive**') 
+                            st.write('The Patient condition is Inconclusive') 
                     else:
-                            st.subheader('**The Patient condition is Normal**') 
+                            st.write('The Patient condition is Normal') 
+
+            dd1,dd2=st.tabs(["Acuracy and F1 scores","Feature Importance Chart"])
+
+            with dd1:
+                a1,a2=st.columns(2) 
+                a1.metric(label='**:red[Accuracy]**',
+                        value=acc)
+                a2.metric(label='**:red[F1 score:]**', value=f1)
+
+            
+            with dd2:
+                Feature_Imp = clf.feature_importances_
+                FI = list(zip(Feature_Imp,x_test.columns))
+                dff = pd.DataFrame(FI, columns=['Score', 'Columns'])
+                # df.loc[df['Columns'] == 'P_OUTCOME', 'Columns'] = 'PREVIOUS_CAMPAIGN_OUTCOME'
+                dff.sort_values(by='Score', inplace=True, ascending=False)
+        
+                st.write('')
+                # Heading
+                # st.write('##### Feature Importance')
+                fg = px.bar(dff, x='Score', y='Columns', color='Columns',
+                        labels={'Score': 'Scores', 'Columns': 'Features'},
+                        text='Score')
+        
+                # Set transparent background
+                fg.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0, 0, 0, 0)')
+                # Customize tick and label colors for x-axis and y-axis
+                fg.update_xaxes(tickfont=dict(color='#5CA8F1'),  # Change x-axis tick color to blue
+                            titlefont=dict(color='#EF7B45'))  # Change x-axis label color to blue
+                fg.update_yaxes(tickfont=dict(color='#5CA8F1'),  # Change y-axis tick color to green
+                                titlefont=dict(color='#EF7B45'))  # Change y-axis label color to blue
+                # Render the chart using Streamlit
+                st.plotly_chart(fg, use_container_width=True)
 
 
     if selected=="Batch":
@@ -449,7 +489,7 @@ if selected=="Prediction":
         
         if uploaded_file is not None:
             df = pd.read_csv(uploaded_file)
-            st.write(df.head())
+            # st.write(df.head())
 
             dff=df.apply(LabelEncoder().fit_transform)
             accuracy=pd.DataFrame(df)
@@ -489,7 +529,7 @@ if selected=="Prediction":
                     else:
                         pc.append('Abnormal')
                 fin['patient_condition']=pc
-            with st.expander('Predicted Patient Condition'):
+            # with st.expander('Predicted Patient Condition'):
                 st.table(fin)
 
     
