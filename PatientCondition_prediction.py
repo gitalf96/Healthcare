@@ -65,9 +65,9 @@ st.markdown("""
 div[data-testid="column"] {
    # background-color: rgba(204, 204, 255, 0.9);
    background-color: rgba(255,255,255,0.5);
-   border: 3px solid rgba(255,255,255,0.5);
+   border: 1px solid rgba(255,255,255,0.5);
    padding: 3% 2% 3% 3%;
-   border-radius:4px;
+   border-radius:1px;
    color: rgb((255,0,0));
    overflow-wrap: break-word;
 }
