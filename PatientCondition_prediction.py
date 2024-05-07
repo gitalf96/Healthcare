@@ -470,8 +470,10 @@ if selected=="Prediction":
             df = pd.read_csv(uploaded_file)
             # st.write(df.head())
 
-            dff=df.apply(LabelEncoder().fit_transform)
-            accuracy=pd.DataFrame(df)
+            dff=df.drop(['doctor','hospital','insurance','admission_type','room','bill','name','date_of_admission',
+                'discharge_date','Age_Category','patients','admit_year'],axis=1)             
+            dff=dff.apply(LabelEncoder().fit_transform)
+            # accuracy=pd.DataFrame(df)
             xx=dff.drop(columns=['test_results'],axis=1)
             yy=dff['test_results']
             xx_train,xx_test,yy_train,yy_test = train_test_split(xx,yy,test_size=0.33,random_state=42)
@@ -480,6 +482,7 @@ if selected=="Prediction":
             yy_pred = clff.predict(xx_test)
             accuracy = accuracy_score(yy_test,yy_pred)
 
+
             #LGBM
             mod = lgb.LGBMClassifier(learning_rate=0.09,max_depth=-5,random_state=42)
             mod.fit(xx_train,yy_train,eval_set=[(xx_test,yy_test),(xx_train,yy_train)],
@@ -487,16 +490,20 @@ if selected=="Prediction":
 
             LGBM2=('Testing accuracy {:.4f}'.format(mod.score(xx_test,yy_test)))
 
+            test_data=new_data.apply(LabelEncoder().fit_transform)
             fin = pd.DataFrame(columns=['age','gender','BlOOD_TYPE','medical_condition','medication','BMI','test_results'])
-            edit_da = xx
-            table_da= df.drop(columns=['test_results'],axis=1)
+            tin = pd.DataFrame(columns=['age','gender','BlOOD_TYPE','medical_condition','medication','BMI','test_results'])
+            # edit_da = test_data.drop(columns=['test_results'],axis=1)
+            # table_da= df.drop(columns=['test_results'],axis=1)
 
-            if st.button('Click to Predict'):
-                # fin_da = pd.DataFrame(clff.predict(edit_da))
-                patient_condition=clff.predict(edit_da)
-                fin['patient_condition']=patient_condition
+            prdct_dat=st.radio('Select a model',['Random Forest','LightGBM'])
+
+            if prdct_dat=='Random Forest':
+                fin_da = pd.DataFrame(clff.predict(test_data))
+                # patient_condition=clff.predict(edit_da)
+                fin['patient_condition']=fin_da
                 fin_da=fin['patient_condition']
-                fin = pd.concat([table_da,fin_da], axis=1)
+                fin = pd.concat([new_data,fin_da], axis=1)
                 fin=pd.DataFrame(fin)
                 pc=[]
                 for i in fin['patient_condition']:
@@ -509,5 +516,25 @@ if selected=="Prediction":
                 fin['patient_condition']=pc
             # with st.expander('Predicted Patient Condition'):
                 st.table(fin)
+
+            if prdct_dat=='LightGBM':
+                tin_da = pd.DataFrame(mod.predict(test_data))
+                # patient_condition=clff.predict(edit_da)
+                tin['patient_condition']=tin_da
+                tin_da=tin['patient_condition']
+                tin = pd.concat([new_data,tin_da], axis=1)
+                tin=pd.DataFrame(tin)
+                pc=[]
+                for i in tin['patient_condition']:
+                    if i==1:
+                        pc.append('Inconclusive')
+                    elif i==2:
+                        pc.append('Normal')
+                    else:
+                        pc.append('Abnormal')
+                tin['patient_condition']=pc
+            # with st.expander('Predicted Patient Condition'):
+                st.table(tin)
+
 
     
