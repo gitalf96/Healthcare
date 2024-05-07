@@ -467,7 +467,7 @@ if selected=="Prediction":
         uploaded_file = st.file_uploader("Choose a file")
         
         if uploaded_file is not None:
-            df = pd.read_csv(uploaded_file)
+            new_data = pd.read_csv(uploaded_file)
             # st.write(df.head())
 
             dff=df.drop(['doctor','hospital','insurance','admission_type','room','bill','name','date_of_admission',
