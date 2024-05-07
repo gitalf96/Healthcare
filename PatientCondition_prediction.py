@@ -17,21 +17,8 @@ from matplotlib import pyplot
 # import warnings
 # warnings.filterwarnings("ignore")
 
-
-
 st.set_page_config(page_title="Healthcare Dashboard",layout='wide')
 st.title(':red[Patient Condition Analysis and Prediction]')
-
-# st.markdown(
-#     """
-#     <style>
-#     div[data-testid="stApp"]  {
-#         background-color: rgba(0,0,0, 0.9);
-#             }
-#    </style>
-#     """,
-#     unsafe_allow_html=True
-# )
 
 page_element="""
 <style>
@@ -83,7 +70,6 @@ div[data-testid="element-container"] > label[data-testid="stMetricLabel"] > div 
 , unsafe_allow_html=True)
 
 df=pd.read_csv('healthcare_dataset.csv')
-
 #Rename columns
 new_names = {'NAME': 'name', 'AGE': 'age', 'GENDER': 'gender',
              'BLOOD_TYPE': 'blood_type', 'MEDICAL_CONDITION': 'medical_condition',
@@ -97,7 +83,6 @@ df.rename(columns=new_names, inplace=True)
 
 df['date_of_admission'] = pd.to_datetime(df['date_of_admission'])
 df['admit_year'] = df['date_of_admission'].dt.year
-
 #Categorize Age
 category_AGE=[]
 
@@ -110,7 +95,6 @@ for i in df['age']:
         category_AGE.append('Old')
 
 df['Age_Category']=category_AGE
-
 #Encoding PAtients
 nome=[]
 for i in df['name']:
@@ -220,7 +204,6 @@ if selected=="Dashboard":
                                         #  "patients": ("Patient Count")
                                             },)
                 fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)',paper_bgcolor='rgba(0, 0, 0, 0)')
-            # with see1:
 
                 if selected_admtype == 'Elective':
                     st.write('Condition of patients in Elective admission')
@@ -380,7 +363,6 @@ if selected=="Prediction":
         
         new_data=pd.DataFrame([new_data])
         
-
         new_df=new_data.apply(LabelEncoder().fit_transform)
         # st.write(impp)
         selected=option_menu(
@@ -433,9 +415,6 @@ if selected=="Prediction":
                                 titlefont=dict(color='#EF7B45'))  # Change y-axis label color to blue
                 # Render the chart using Streamlit
                 st.plotly_chart(fiig, use_container_width=True)
-
-
-
             
         if selected=="Random Forest":
 
@@ -500,7 +479,6 @@ if selected=="Prediction":
             clff.fit(xx_train, yy_train)
             yy_pred = clff.predict(xx_test)
             accuracy = accuracy_score(yy_test,yy_pred)
-
 
             #LGBM
             mod = lgb.LGBMClassifier(learning_rate=0.09,max_depth=-5,random_state=42)
