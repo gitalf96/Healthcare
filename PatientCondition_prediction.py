@@ -369,7 +369,7 @@ if selected=="Prediction":
         new_data['gender'] = st.selectbox(':red[Select gender]',('Female','Male'))
         new_data['BlOOD_TYPE']= st.selectbox(':red[Select BlOOD_TYPE]',('O-','O+','B-','AB+','A+','AB-','A-','B+'))
         new_data['medical_condition']=st.selectbox(':red[Select medical_condition]',('Diabetes','Asthma','Obesity','Arthritis','Hypertension','Cancer'))
-        new_data['admission_type']=st.selectbox(':red[Select admission type])',('Elective','Emergency','Urgent'))
+        new_data['admission_type']=st.selectbox(':red[Select admission type]',('Elective','Emergency','Urgent'))
         new_data['medication']=st.selectbox(':red[Select medication]',('Aspirin','Lipitor','Penicillin','Paracetamol','Ibuprofen'))
         new_data['BMI']=st.selectbox(':red[Select BMI]',('High','Medium','Low'))
         
