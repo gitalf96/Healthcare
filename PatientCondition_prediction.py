@@ -482,7 +482,7 @@ if selected=="Prediction":
             new_data = pd.read_csv(uploaded_file)
             # st.write(df.head())
 
-            dff=df.drop(['doctor','hospital','insurance','admission_type','room','bill','name','date_of_admission',
+            dff=df.drop(['doctor','hospital','insurance','room','bill','name','date_of_admission',
                 'discharge_date','Age_Category','patients','admit_year'],axis=1)             
             dff=dff.apply(LabelEncoder().fit_transform)
             # accuracy=pd.DataFrame(df)
