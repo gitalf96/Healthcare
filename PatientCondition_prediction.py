@@ -313,6 +313,17 @@ for i in df['BlOOD_TYPE']:
 df['BlOOD_TYPE']=bg
 #dt.head()
 
+am=[]
+for i in df['admission_type']:
+    if i=='Elective':
+        am.append((1))
+    elif i=='Emergency':
+        am.append((2))
+    elif i=='Urgent':
+        am.append(0)
+
+df['admission_type']=am
+
 if selected=="Prediction":
 
     with st.sidebar:
@@ -324,7 +335,7 @@ if selected=="Prediction":
             orientation="horizontal",
             default_index=0,
         )
-    dt=df.drop(['doctor','hospital','insurance','room','admission_type','bill','name','date_of_admission',
+    dt=df.drop(['doctor','hospital','insurance','room','bill','name','date_of_admission',
                 'discharge_date','Age_Category','patients','admit_year'],axis=1)       
 
     if selected=="Single":
@@ -358,6 +369,7 @@ if selected=="Prediction":
         new_data['gender'] = st.selectbox(':red[Select gender]',('Female','Male'))
         new_data['BlOOD_TYPE']= st.selectbox(':red[Select BlOOD_TYPE]',('O-','O+','B-','AB+','A+','AB-','A-','B+'))
         new_data['medical_condition']=st.selectbox(':red[Select medical_condition]',('Diabetes','Asthma','Obesity','Arthritis','Hypertension','Cancer'))
+        new_data['admission_type']=st.selectbox(':red[Select admission type])',('Elective','Emergency','Urgent'))
         new_data['medication']=st.selectbox(':red[Select medication]',('Aspirin','Lipitor','Penicillin','Paracetamol','Ibuprofen'))
         new_data['BMI']=st.selectbox(':red[Select BMI]',('High','Medium','Low'))
         
@@ -491,8 +503,8 @@ if selected=="Prediction":
             LGBM2=('Testing accuracy {:.4f}'.format(mod.score(xx_test,yy_test)))
 
             test_data=new_data.apply(LabelEncoder().fit_transform)
-            fin = pd.DataFrame(columns=['age','gender','BlOOD_TYPE','medical_condition','medication','BMI','test_results'])
-            tin = pd.DataFrame(columns=['age','gender','BlOOD_TYPE','medical_condition','medication','BMI','test_results'])
+            fin = pd.DataFrame(columns=['age','gender','BlOOD_TYPE','medical_condition','admission_type','medication','BMI','test_results'])
+            tin = pd.DataFrame(columns=['age','gender','BlOOD_TYPE','medical_condition','admission_type','medication','BMI','test_results'])
             # edit_da = test_data.drop(columns=['test_results'],axis=1)
             # table_da= df.drop(columns=['test_results'],axis=1)
 
